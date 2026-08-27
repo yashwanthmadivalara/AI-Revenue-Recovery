@@ -63,8 +63,12 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-4">
-                <a href="/docs" target="_blank" class="text-xs font-medium text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 transition">
+            <div class="flex items-center space-x-3">
+                <button id="quick-guide-btn" onclick="toggleQuickGuide(true)" class="text-xs font-semibold text-indigo-300 hover:text-white px-3 py-1.5 rounded-lg border border-indigo-500/30 bg-indigo-950/40 hover:bg-indigo-900/50 transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                    <span>📖</span>
+                    <span>Quick Guide</span>
+                </button>
+                <a id="api-docs-link" href="/docs" target="_blank" class="text-xs font-medium text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 transition">
                     API Docs ↗
                 </a>
                 <div class="flex items-center space-x-2 text-xs text-emerald-400 font-mono bg-emerald-950/40 px-3 py-1.5 rounded-lg border border-emerald-800/40">
@@ -381,10 +385,249 @@
             }
         }
 
+        // Quick Guide Drawer Toggle
+        function toggleQuickGuide(show) {
+            const drawer = document.getElementById('quick-guide-drawer');
+            const backdrop = document.getElementById('quick-guide-backdrop');
+            if (show) {
+                backdrop.classList.remove('hidden');
+                setTimeout(() => {
+                    backdrop.classList.remove('opacity-0');
+                    drawer.classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                drawer.classList.add('translate-x-full');
+                backdrop.classList.add('opacity-0');
+                setTimeout(() => {
+                    backdrop.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        function setGuideTab(tabId) {
+            document.querySelectorAll('.guide-tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.guide-tab-btn').forEach(el => {
+                el.classList.remove('border-indigo-500', 'text-indigo-400', 'bg-indigo-950/40');
+                el.classList.add('border-transparent', 'text-slate-400');
+            });
+            
+            const targetContent = document.getElementById(`guide-tab-${tabId}`);
+            const targetBtn = document.getElementById(`guide-btn-${tabId}`);
+            if (targetContent) targetContent.classList.remove('hidden');
+            if (targetBtn) {
+                targetBtn.classList.remove('border-transparent', 'text-slate-400');
+                targetBtn.classList.add('border-indigo-500', 'text-indigo-400', 'bg-indigo-950/40');
+            }
+        }
+
         // Initial Load
         window.addEventListener('DOMContentLoaded', () => {
             refreshData();
         });
     </script>
+
+    <!-- Quick Guide Slide-over Modal Drawer -->
+    <div id="quick-guide-backdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300 flex justify-end">
+        <div id="quick-guide-drawer" class="w-full max-w-xl bg-slate-900 border-l border-slate-800 h-full flex flex-col shadow-2xl translate-x-full transition-transform duration-300 ease-out">
+            
+            <!-- Drawer Header -->
+            <div class="px-6 py-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold">
+                        📖
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">AI Revenue Recovery Quick Guide</h3>
+                        <p class="text-xs text-slate-400">Architecture, Scenarios, and API Workflow</p>
+                    </div>
+                </div>
+                <button id="close-guide-btn" onclick="toggleQuickGuide(false)" class="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Drawer Tab Navigation -->
+            <div class="flex border-b border-slate-800 bg-slate-950/30 px-6 gap-2 pt-2 text-xs font-semibold">
+                <button id="guide-btn-overview" onclick="setGuideTab('overview')" class="guide-tab-btn px-3 py-2.5 border-b-2 border-indigo-500 text-indigo-400 bg-indigo-950/40 rounded-t-lg transition">
+                    1. Lifecycle Flow
+                </button>
+                <button id="guide-btn-scenarios" onclick="setGuideTab('scenarios')" class="guide-tab-btn px-3 py-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 rounded-t-lg transition">
+                    2. Scenarios
+                </button>
+                <button id="guide-btn-api" onclick="setGuideTab('api')" class="guide-tab-btn px-3 py-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 rounded-t-lg transition">
+                    3. API & cURL
+                </button>
+                <button id="guide-btn-ledger" onclick="setGuideTab('ledger')" class="guide-tab-btn px-3 py-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 rounded-t-lg transition">
+                    4. Ledger & ROI
+                </button>
+            </div>
+
+            <!-- Drawer Body Content -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-5 custom-scrollbar text-xs leading-relaxed text-slate-300">
+                
+                <!-- Tab 1: Lifecycle Flow -->
+                <div id="guide-tab-overview" class="guide-tab-content space-y-4">
+                    <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span>⚡</span> Autonomous Recovery Cycle
+                    </h4>
+                    <p class="text-slate-400">
+                        The platform operates as a deterministic, bounded multi-agent state machine that transforms failed payment events into recovered revenue without human intervention.
+                    </p>
+                    
+                    <div class="space-y-2.5">
+                        <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl">
+                            <span class="font-bold text-blue-400 font-mono">STEP 1: Real-Time Ingestion & Risk Detection</span>
+                            <p class="text-slate-400 mt-1">Parses Stripe, Razorpay, and ERP webhooks. Distinguishes recoverable soft declines from terminal card theft or fraud.</p>
+                        </div>
+                        <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl">
+                            <span class="font-bold text-purple-400 font-mono">STEP 2: Root-Cause Reasoning Engine</span>
+                            <p class="text-slate-400 mt-1">Evaluates customer liquidity, historical payment timings, and churn signals to formulate targeted recovery plans and multilingual copy.</p>
+                        </div>
+                        <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl">
+                            <span class="font-bold text-amber-400 font-mono">STEP 3: Policy & Compliance Guardrail Gate</span>
+                            <p class="text-slate-400 mt-1">Enforces TCPA quiet hours, contact fatigue limits (&le; 3 per 7 days), and the immediate <strong class="text-rose-400">DISPUTE_KILLSWITCH</strong>.</p>
+                        </div>
+                        <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl">
+                            <span class="font-bold text-emerald-400 font-mono">STEP 4: Bounded Action Execution</span>
+                            <p class="text-slate-400 mt-1">Executes smart gateway retries, sends dynamic discount payment links, or dispatches conversational voice agents.</p>
+                        </div>
+                        <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl">
+                            <span class="font-bold text-indigo-400 font-mono">STEP 5: Immutable Cryptographic Ledger</span>
+                            <p class="text-slate-400 mt-1">Appends every recovered cent, gateway fee, and AI token cost to a SHA-256 hash-chained ledger for verified ROI calculation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Scenarios -->
+                <div id="guide-tab-scenarios" class="guide-tab-content hidden space-y-4">
+                    <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span>🧪</span> 4 Production Simulation Scenarios
+                    </h4>
+                    <p class="text-slate-400">
+                        Click any of the cards on the main dashboard to run an instant state machine simulation:
+                    </p>
+
+                    <div class="space-y-3">
+                        <div class="p-3.5 bg-slate-950/70 border border-blue-900/40 rounded-xl">
+                            <div class="flex items-center justify-between font-bold text-blue-400">
+                                <span>1. Soft Card Decline</span>
+                                <span class="font-mono text-[11px]">$450.00 USD</span>
+                            </div>
+                            <p class="text-slate-300 mt-1">Triggered by Stripe <code class="text-slate-400 bg-slate-900 px-1 py-0.5 rounded">insufficient_funds</code>. AI agent calculates a 24-hour backoff retry delay to align with salary deposit timing.</p>
+                        </div>
+
+                        <div class="p-3.5 bg-slate-950/70 border border-purple-900/40 rounded-xl">
+                            <div class="flex items-center justify-between font-bold text-purple-400">
+                                <span>2. Abandoned Checkout</span>
+                                <span class="font-mono text-[11px]">$1,200.00 USD</span>
+                            </div>
+                            <p class="text-slate-300 mt-1">High-value cart abandoned for 30 minutes. Generates a personalized email with an automated 5% discount incentive link.</p>
+                        </div>
+
+                        <div class="p-3.5 bg-slate-950/70 border border-amber-900/40 rounded-xl">
+                            <div class="flex items-center justify-between font-bold text-amber-400">
+                                <span>3. Overdue B2B (Hinglish Voice)</span>
+                                <span class="font-mono text-[11px]">₹4,200.00 INR</span>
+                            </div>
+                            <p class="text-slate-300 mt-1">65-day delinquent B2B invoice from NetSuite. Triggers an interactive Hinglish Voice AI agent and secures a Promise-to-Pay (P2P).</p>
+                        </div>
+
+                        <div class="p-3.5 bg-slate-950/70 border border-rose-900/40 rounded-xl">
+                            <div class="flex items-center justify-between font-bold text-rose-400">
+                                <span>4. Active Dispute Block (Killswitch)</span>
+                                <span class="font-mono text-[11px]">$1,500.00 USD</span>
+                            </div>
+                            <p class="text-slate-300 mt-1">Open customer chargeback detected. Compliance guardrail flags a high-severity violation and instantly blocks all automated outreach.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: API & cURL -->
+                <div id="guide-tab-api" class="guide-tab-content hidden space-y-4">
+                    <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span>📡</span> API Quick Test Commands
+                    </h4>
+                    <p class="text-slate-400">
+                        You can trigger state machine runs and query the ledger directly via REST endpoints:
+                    </p>
+
+                    <div class="space-y-3 font-mono text-[11px]">
+                        <div>
+                            <p class="text-slate-400 font-sans text-xs mb-1 font-semibold">1. Trigger Soft Decline Simulation:</p>
+                            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-indigo-300 overflow-x-auto">curl -X POST http://localhost:3000/api/v1/simulator/run/soft_decline</pre>
+                        </div>
+
+                        <div>
+                            <p class="text-slate-400 font-sans text-xs mb-1 font-semibold">2. Trigger Active Dispute Guardrail Test:</p>
+                            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-rose-300 overflow-x-auto">curl -X POST http://localhost:3000/api/v1/simulator/run/active_dispute_blocked</pre>
+                        </div>
+
+                        <div>
+                            <p class="text-slate-400 font-sans text-xs mb-1 font-semibold">3. Fetch Financial ROI Metrics:</p>
+                            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-emerald-300 overflow-x-auto">curl http://localhost:3000/api/v1/ledger/metrics</pre>
+                        </div>
+
+                        <div>
+                            <p class="text-slate-400 font-sans text-xs mb-1 font-semibold">4. Verify SHA-256 Ledger Integrity:</p>
+                            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-amber-300 overflow-x-auto">curl http://localhost:3000/api/v1/ledger/verify-integrity</pre>
+                        </div>
+                    </div>
+
+                    <a href="/docs" target="_blank" class="block text-center py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition">
+                        Open Interactive Swagger UI (/docs) ↗
+                    </a>
+                </div>
+
+                <!-- Tab 4: Ledger & ROI -->
+                <div id="guide-tab-ledger" class="guide-tab-content hidden space-y-4">
+                    <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span>⛓️</span> Append-Only Cryptographic Ledger
+                    </h4>
+                    <p class="text-slate-400">
+                        Every dollar movement is immutably recorded in a SHA-256 hash chain:
+                    </p>
+
+                    <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl font-mono text-[11px] text-slate-300">
+                        hash = SHA256(prev_hash + sequence_id + case_id + gross_recovered + costs)
+                    </div>
+
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 pt-2">Net ROI Attribution Formula</h4>
+                    <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+                        <div class="flex justify-between border-b border-slate-800/80 pb-1.5">
+                            <span class="text-slate-400">Gross Recovered Revenue</span>
+                            <span class="text-emerald-400 font-mono font-bold">+ Gross $</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800/80 pb-1.5">
+                            <span class="text-slate-400">Gateway Processing Fee (2.9% + $0.30)</span>
+                            <span class="text-rose-400 font-mono">- Gateway Fee</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800/80 pb-1.5">
+                            <span class="text-slate-400">Outreach Cost (Email/SMS/Voice)</span>
+                            <span class="text-rose-400 font-mono">- Comms Cost</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-800/80 pb-1.5">
+                            <span class="text-slate-400">AI Token Inference Cost</span>
+                            <span class="text-rose-400 font-mono">- Token Cost</span>
+                        </div>
+                        <div class="flex justify-between font-bold pt-1 text-indigo-300">
+                            <span>= Net Recovered ROI</span>
+                            <span class="font-mono">= Net $</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Drawer Footer -->
+            <div class="p-4 border-t border-slate-800 bg-slate-950/80 flex items-center justify-between">
+                <span class="text-[11px] text-slate-500 font-mono">Engine v1.0.0 • Express 5 & TypeScript</span>
+                <button onclick="toggleQuickGuide(false)" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg transition">
+                    Got it, close guide
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

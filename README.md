@@ -1,13 +1,24 @@
 # ⚡ AI Revenue Recovery System
 
-[![CI Pipeline](https://github.com/your-org/ai-revenue-recovery/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/ai-revenue-recovery)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?logo=fastapi)](https://fastapi.tiangolo.com)
-[![LangGraph](https://img.shields.io/badge/Orchestration-LangGraph-orange.svg)](https://github.com/langchain-ai/langgraph)
+[![Node.js](https://img.shields.io/badge/Node.js-20%2B%20%7C%2022-339933.svg?logo=nodedotjs)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-3178C6.svg?logo=typescript)](https://www.typescriptlang.org/)
+[![Express](https://img.shields.io/badge/Express-5.0-000000.svg?logo=express)](https://expressjs.com)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker)](https://www.docker.com/)
 
-An autonomous, enterprise-grade **AI Revenue Recovery and Dunning Platform**. It seamlessly transitions from real-time telemetry risk detection to root-cause reasoning (LangGraph), policy & compliance guardrail validation, multi-channel bounded execution, and an immutable, cryptographically chained financial audit ledger with net ROI attribution.
+An autonomous, enterprise-grade **AI Revenue Recovery and Dunning Platform**. It seamlessly transitions from real-time telemetry risk detection to root-cause reasoning (LangGraph-style state machine), policy & compliance guardrail validation, multi-channel bounded execution, and an immutable, cryptographically chained financial audit ledger with net ROI attribution.
+
+---
+
+## 📌 Quick Guide Menu
+
+| Section | Description | Quick Link |
+| :--- | :--- | :--- |
+| **⚡ Quickstart** | Clone, install dependencies & start the dev server | [Jump to Quickstart](#-quickstart-guide) |
+| **🧪 Scenarios** | 4 simulated failure & recovery workflows | [Jump to Scenarios](#-interactive-simulation-lab) |
+| **🏛️ Architecture** | 5-stage autonomous recovery lifecycle | [Jump to Architecture](#️-end-to-end-system-architecture) |
+| **📡 API & Docs** | REST routes, webhook endpoints & Swagger UI | [Jump to REST API](#-rest-api--webhook-endpoints) |
+| **⛓️ Audit Ledger** | Cryptographic SHA-256 hash chaining & Net ROI | [Jump to Ledger Info](#5-append-only-financial-audit-ledger--roi-engine) |
+| **🛡️ Guardrails** | TCPA compliance & Dispute Killswitch rules | [Jump to Guardrails](#3-policy--compliance-guardrail-engine) |
 
 ---
 
@@ -27,7 +38,7 @@ An autonomous, enterprise-grade **AI Revenue Recovery and Dunning Platform**. It
   └── Expired Mandate / AutoPay Watcher
               │
               ▼ (Flags Risk Event)
-  [ Decision & Diagnosis Agent (LangGraph) ]
+  [ Decision & Diagnosis Agent ]
   ├── Root Cause Analysis (Technical vs. Liquidity vs. Intent)
   ├── Multi-Channel Strategy Selector (Retry vs. Email vs. SMS vs. Voice)
   └── Dynamic Generator (Personalized messaging & Hinglish Voice Script)
@@ -55,14 +66,14 @@ An autonomous, enterprise-grade **AI Revenue Recovery and Dunning Platform**. It
 
 ---
 
-## 🚀 Key System Features & Blueprint
+## 🚀 Key System Features
 
 ### 1. Ingestion & Event Detection
 - **Multi-Gateway Webhooks**: Native parsers for Stripe (`payment_intent.payment_failed`, `invoice.payment_failed`), Razorpay (`payment.failed`, `subscription.halted`), and Chargebee.
 - **ERP Aging Feed**: Ingestion for NetSuite / QuickBooks batch accounts receivable reports (30, 60, 90+ day delinquency).
 - **Risk Classifier**: Separates recoverable soft declines (e.g. `insufficient_funds`, `processing_error`) from hard terminal declines (`stolen_card`, `fraudulent`).
 
-### 2. Diagnosis & Strategy Agent (LangGraph Reasoning)
+### 2. Diagnosis & Strategy Agent
 - **Root-Cause Analysis**: Distinguishes between temporary card limits, customer churn intent, and payment friction.
 - **Multilingual & Hinglish Voice Scripts**: Interactive conversational AI prompts for Indian & global enterprise receivables.
 - **Dynamic Incentives**: Automated time-bounded discounts (e.g. 5% - 10%) or flexible installment plans for high-ticket carts.
@@ -76,7 +87,7 @@ An autonomous, enterprise-grade **AI Revenue Recovery and Dunning Platform**. It
 ### 4. Bounded Action Layer
 - **Smart Gateway Retries**: Schedules delayed execution during optimal cardholder liquidity windows (e.g., post-salary 24h backoff).
 - **HMAC Dynamic Payment Links**: One-click secure payment links with embedded dynamic discounts and expiration timers.
-- **Voice AI Dispatcher**: Initiates outbound Vapi AI / Twilio Voice calls with conversational intent extraction.
+- **Voice AI Dispatcher**: Initiates outbound voice calls with conversational intent extraction.
 
 ### 5. Append-Only Financial Audit Ledger & ROI Engine
 - **Cryptographic Hash Chain**: Every transaction, cost, and recovered dollar is chained using SHA-256 (`previous_hash` + `payload` → `current_hash`).
@@ -90,13 +101,12 @@ An autonomous, enterprise-grade **AI Revenue Recovery and Dunning Platform**. It
 
 | Component | Technology |
 | :--- | :--- |
-| **Agent Orchestration** | [LangGraph](https://github.com/langchain-ai/langgraph) / LangChain Core |
-| **Backend Framework** | [FastAPI](https://fastapi.tiangolo.com/) (Python 3.10 - 3.12) |
-| **Database & ORM** | SQLAlchemy 2.0 (Async) • SQLite (Default) / PostgreSQL + Redis |
-| **Frontend UI** | Real-time Dashboard with Tailwind CSS, Chart.js & Jinja2 |
-| **Communication Providers** | Twilio, Vapi AI, Resend, SendGrid (Live hooks + Mock Simulators) |
-| **Payment Integrations** | Stripe, Razorpay, Chargebee APIs |
-| **Testing & CI** | Pytest, Pytest-Asyncio, Pytest-Cov, GitHub Actions CI |
+| **Language & Runtime** | [Node.js](https://nodejs.org/) (ES Modules) • [TypeScript](https://www.typescriptlang.org/) |
+| **Server Framework** | [Express 5](https://expressjs.com/) |
+| **Bundling & Execution** | `tsx` (Development) • `esbuild` (Production Bundle) |
+| **Frontend UI** | Real-time Dashboard with Tailwind CSS, Chart.js & Vanilla JS |
+| **API Documentation** | Interactive Swagger UI (`/docs`) |
+| **Cryptographic Ledger** | Node.js `crypto` (SHA-256 hash chaining) |
 
 ---
 
@@ -105,15 +115,11 @@ An autonomous, enterprise-grade **AI Revenue Recovery and Dunning Platform**. It
 ### 1. Clone & Install Dependencies
 
 ```bash
-git clone https://github.com/your-org/ai-revenue-recovery.git
-cd ai-revenue-recovery
+git clone https://github.com/yashwanthmadivalara/AI-Revenue-Recovery.git
+cd AI-Revenue-Recovery
 
-# Create and activate virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Install requirements
-pip install -r requirements.txt
+# Install dependencies
+npm install
 ```
 
 ### 2. Configure Environment (Optional)
@@ -121,25 +127,29 @@ pip install -r requirements.txt
 ```bash
 cp .env.example .env
 ```
-*(By default, the application runs with zero configuration using SQLite and high-fidelity mock engines. You can optionally add `OPENAI_API_KEY`, `STRIPE_SECRET_KEY`, or `TWILIO_ACCOUNT_SID` for live integrations).*
+*(By default, the application runs out-of-the-box on port 3000).*
 
-### 3. Run the Interactive Web Dashboard & Server
+### 3. Run Development Server
 
 ```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+npm run dev
 ```
-- Open **Web Dashboard**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-- Open **Interactive Swagger API Docs**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+- Open **Web Dashboard**: [http://localhost:3000/](http://localhost:3000/)
+- Open **Interactive Swagger API Docs**: [http://localhost:3000/docs](http://localhost:3000/docs)
+
+### 4. Production Build
+
+```bash
+npm run build
+npm start
+```
 
 ---
 
-## 🧪 CLI Interactive Simulation Lab
+## 🧪 Interactive Simulation Lab
 
-Run the full end-to-end multi-agent recovery lifecycle across all four production scenarios:
-
-```bash
-python -m app.cli.demo --scenarios all
-```
+Run the full end-to-end multi-agent recovery lifecycle across four realistic scenarios:
 
 ### Supported Scenarios:
 1. **`soft_decline`**: Stripe insufficient funds ($450) → Schedules 24h liquidity-optimized gateway retry.
@@ -147,26 +157,21 @@ python -m app.cli.demo --scenarios all
 3. **`overdue_b2b_hinglish`**: NetSuite 65-day delinquent B2B invoice (₹4,200) → Multilingual Hinglish Voice AI call that negotiates and logs a Promise-to-Pay (P2P) date.
 4. **`active_dispute_blocked`**: Open customer chargeback ($1,500) → Emergency compliance kill-switch blocks all automated outreach.
 
----
-
-## 🐳 Docker & Docker Compose Deployment
-
-Run the complete production stack (FastAPI Application + PostgreSQL 16 + Redis 7):
-
+Trigger scenarios via API:
 ```bash
-# Build and run containers
-docker-compose up --build -d
-
-# View application logs
-docker-compose logs -f app
-
-# Stop containers
-docker-compose down
+curl -X POST http://localhost:3000/api/v1/simulator/run/soft_decline
+curl -X POST http://localhost:3000/api/v1/simulator/run/abandoned_checkout
+curl -X POST http://localhost:3000/api/v1/simulator/run/overdue_b2b_hinglish
+curl -X POST http://localhost:3000/api/v1/simulator/run/active_dispute_blocked
 ```
 
 ---
 
 ## 📡 REST API & Webhook Endpoints
+
+### System & Documentation
+- `GET /api/v1/health` — Engine health status
+- `GET /docs` — Interactive Swagger API documentation
 
 ### Ingestion Webhooks
 - `POST /api/v1/webhooks/stripe` — Ingests raw Stripe webhooks
@@ -174,7 +179,9 @@ docker-compose down
 - `POST /api/v1/webhooks/chargebee` — Ingests raw Chargebee webhooks
 - `POST /api/v1/webhooks/erp` — Ingests NetSuite / QuickBooks batch invoice feeds
 
-### Recovery Operations
+### Recovery Operations & Simulation
+- `GET /api/v1/simulator/scenarios` — Lists available simulation scenarios
+- `POST /api/v1/simulator/run/:scenarioKey` — Executes state machine on a simulation scenario
 - `POST /api/v1/recovery/trigger` — Manually triggers end-to-end recovery for any event
 - `GET /api/v1/recovery/actions` — Lists recent bounded tool execution logs
 
@@ -186,16 +193,16 @@ docker-compose down
 - `GET /api/v1/ledger/entries` — Lists append-only audit trail records
 - `GET /api/v1/ledger/metrics` — Computes gross recovery, costs, and net ROI
 - `GET /api/v1/ledger/cohorts` — Breakdown analysis across cohorts and risk types
-- `GET /api/v1/ledger/verify-integrity` — Verifies SHA-256 cryptographic chain integrity
+- `GET /api/v1/ledger/verify-integrity` — Cryptographically verifies SHA-256 hash chain
 
 ---
 
-## 🧪 Running Automated Tests
+## 🧪 Linting & Type Checking
 
-Run the full pytest suite with test coverage:
+Run the TypeScript compiler to verify type safety:
 
 ```bash
-pytest -v --cov=app tests/
+npm run lint
 ```
 
 ---
