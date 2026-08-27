@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Revenue Recovery Engine</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased">
+
+    <!-- Top Navigation Header -->
+    <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20">
+                    ⚡
+                </div>
+                <div>
+                    <h1 class="text-base font-bold text-white tracking-tight flex items-center gap-2">
+                        AI Revenue Recovery
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">v1.0.0</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Autonomous Risk Detection • LangGraph Reasoning • Guardrails • Financial Ledger</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <a href="/docs" target="_blank" class="text-xs font-medium text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 transition">
+                    API Docs ↗
+                </a>
+                <div class="flex items-center space-x-2 text-xs text-emerald-400 font-mono bg-emerald-950/40 px-3 py-1.5 rounded-lg border border-emerald-800/40">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>ENGINE ACTIVE</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+
+        <!-- Executive Financial ROI KPI Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-full blur-2xl"></div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">At-Risk Revenue</p>
+                <h3 id="kpi-at-risk" class="text-2xl font-bold text-rose-400 mt-2 font-mono">$0.00</h3>
+                <p class="text-xs text-slate-400 mt-1">Identified potential revenue leak</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl"></div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Recovered Revenue</p>
+                <h3 id="kpi-recovered" class="text-2xl font-bold text-emerald-400 mt-2 font-mono">$0.00</h3>
+                <p class="text-xs text-emerald-500/80 mt-1 flex items-center gap-1">
+                    <span>↑</span> <span id="kpi-recovery-rate">0.0%</span> recovery rate
+                </p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl"></div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Net Recovered ROI</p>
+                <h3 id="kpi-net-recovered" class="text-2xl font-bold text-indigo-400 mt-2 font-mono">$0.00</h3>
+                <p class="text-xs text-slate-400 mt-1">After Gateway & Comms costs</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-2xl"></div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">ROI Multiple</p>
+                <h3 id="kpi-roi-multiple" class="text-2xl font-bold text-amber-400 mt-2 font-mono">0.0x</h3>
+                <p class="text-xs text-slate-400 mt-1">Net gain per $1 cost</p>
+            </div>
+        </section>
+
+        <!-- Interactive Scenario Trigger Panel -->
+        <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-md">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-800 pb-5 mb-5">
+                <div>
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <span>🧪</span> Interactive Simulation Lab
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5">
+                        Trigger real-world revenue failure telemetry to watch the autonomous agent diagnose, apply guardrails, and execute bounded actions.
+                    </p>
+                </div>
+                <button onclick="refreshData()" class="text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+                    🔄 Refresh Dashboard
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <button onclick="runScenario('soft_decline')" class="p-4 bg-slate-950/70 hover:bg-indigo-950/30 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition text-left group cursor-pointer">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Stripe</span>
+                        <span class="text-xs text-slate-500 group-hover:text-indigo-400">Run ⚡</span>
+                    </div>
+                    <h4 class="text-sm font-semibold text-slate-200 group-hover:text-white">1. Soft Card Decline</h4>
+                    <p class="text-xs text-slate-400 mt-1">Insufficient funds ($450) → Optimal 24h Smart Gateway Retry schedule.</p>
+                </button>
+
+                <button onclick="runScenario('abandoned_checkout')" class="p-4 bg-slate-950/70 hover:bg-indigo-950/30 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition text-left group cursor-pointer">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">Mixpanel</span>
+                        <span class="text-xs text-slate-500 group-hover:text-indigo-400">Run ⚡</span>
+                    </div>
+                    <h4 class="text-sm font-semibold text-slate-200 group-hover:text-white">2. Abandoned Checkout</h4>
+                    <p class="text-xs text-slate-400 mt-1">High-value cart ($1,200) → Dynamic 5% discount email recovery link.</p>
+                </button>
+
+                <button onclick="runScenario('overdue_b2b_hinglish')" class="p-4 bg-slate-950/70 hover:bg-indigo-950/30 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition text-left group cursor-pointer">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">NetSuite</span>
+                        <span class="text-xs text-slate-500 group-hover:text-indigo-400">Run ⚡</span>
+                    </div>
+                    <h4 class="text-sm font-semibold text-slate-200 group-hover:text-white">3. Overdue B2B Receivables</h4>
+                    <p class="text-xs text-slate-400 mt-1">65 days overdue (₹4,200) → Hinglish AI Voice agent with Promise-to-Pay.</p>
+                </button>
+
+                <button onclick="runScenario('active_dispute_blocked')" class="p-4 bg-slate-950/70 hover:bg-rose-950/30 border border-slate-800 hover:border-rose-500/50 rounded-xl transition text-left group cursor-pointer">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">Guardrail Test</span>
+                        <span class="text-xs text-slate-500 group-hover:text-rose-400">Run ⚡</span>
+                    </div>
+                    <h4 class="text-sm font-semibold text-slate-200 group-hover:text-white">4. Active Dispute Block</h4>
+                    <p class="text-xs text-slate-400 mt-1">Open chargeback ($1,500) → Emergency Kill-Switch halts outreach.</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Live Pipeline Execution Logs & Strategy Viewer -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Execution Stream / Workflow Terminal -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col h-[480px]">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        Autonomous Recovery State Graph Stream
+                    </h3>
+                    <span id="exec-status" class="text-xs font-mono text-slate-400">Idle</span>
+                </div>
+                <div id="execution-logs" class="flex-1 font-mono text-xs text-slate-300 overflow-y-auto space-y-1.5 p-3 bg-slate-950 rounded-xl custom-scrollbar border border-slate-800/80">
+                    <p class="text-slate-500">// Ready for events. Click any scenario above to start simulation.</p>
+                </div>
+            </div>
+
+            <!-- Agent Strategy & Bounded Action Inspector -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col h-[480px]">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span>🧠</span> Diagnosis & Guardrail Decision
+                    </h3>
+                    <span id="case-badge" class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">No active case</span>
+                </div>
+                
+                <div id="decision-inspector" class="flex-1 overflow-y-auto space-y-4 text-xs custom-scrollbar pr-1">
+                    <div class="p-4 bg-slate-950/60 rounded-xl border border-slate-800/80 space-y-2">
+                        <p class="text-slate-400 uppercase font-semibold text-[11px]">Root Cause Analysis</p>
+                        <p id="diag-root-cause" class="text-slate-200 font-medium">Awaiting event diagnosis...</p>
+                        <p class="text-slate-400 uppercase font-semibold text-[11px] mt-2">Recommended Strategy</p>
+                        <p id="diag-strategy" class="text-slate-300">--</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-950/60 rounded-xl border border-slate-800/80 space-y-2">
+                        <p class="text-slate-400 uppercase font-semibold text-[11px]">Policy & Compliance Guardrail Check</p>
+                        <div id="guardrail-status-box" class="flex items-center gap-2 text-slate-400">
+                            <span>Status: Pending</span>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-slate-950/60 rounded-xl border border-slate-800/80 space-y-2">
+                        <p class="text-slate-400 uppercase font-semibold text-[11px]">Generated Message / Voice Script</p>
+                        <div id="generated-content" class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-slate-300 font-mono text-[11px] whitespace-pre-wrap">--</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Append-Only Cryptographic Audit Ledger Table -->
+        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-4 mb-4">
+                <div>
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <span>⛓️</span> Financial Audit & Ledger Stream
+                    </h3>
+                    <p class="text-xs text-slate-400">Append-only, SHA-256 hash-chained financial ledger recording all revenue recoveries, fees, and costs.</p>
+                </div>
+                <button onclick="verifyChain()" class="text-xs font-medium bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-400 px-3 py-1.5 rounded-lg border border-emerald-800/50 transition flex items-center gap-1.5 cursor-pointer">
+                    <span>🛡️</span> Verify Cryptographic Chain
+                </button>
+            </div>
+
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left text-xs text-slate-300">
+                    <thead class="bg-slate-950 text-slate-400 uppercase font-semibold text-[10px] tracking-wider">
+                        <tr>
+                            <th class="py-3 px-4 rounded-l-lg">Seq #</th>
+                            <th class="py-3 px-4">Case ID</th>
+                            <th class="py-3 px-4">Entry Type</th>
+                            <th class="py-3 px-4">At Risk</th>
+                            <th class="py-3 px-4">Gross Rec.</th>
+                            <th class="py-3 px-4">Total Cost</th>
+                            <th class="py-3 px-4">Net ROI</th>
+                            <th class="py-3 px-4">SHA-256 Hash</th>
+                            <th class="py-3 px-4 rounded-r-lg">Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ledger-table-body" class="divide-y divide-slate-800 font-mono">
+                        <tr>
+                            <td colspan="9" class="py-6 text-center text-slate-500 font-sans">No ledger transactions yet. Run a scenario above.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        AI Revenue Recovery Engine • Built with Node.js, Express, TypeScript, and Tailwind CSS.
+    </footer>
+
+    <!-- Client-Side JavaScript Logic -->
+    <script>
+        async function runScenario(scenarioKey) {
+            const logsContainer = document.getElementById('execution-logs');
+            const statusIndicator = document.getElementById('exec-status');
+            statusIndicator.textContent = "Executing State Graph...";
+            statusIndicator.className = "text-xs font-mono text-indigo-400 animate-pulse";
+
+            logsContainer.innerHTML = `<p class="text-indigo-400 font-semibold">> Initializing StateGraph for scenario: [${scenarioKey}]...</p>`;
+
+            try {
+                const response = await fetch(`/api/v1/simulator/run/${scenarioKey}`, { method: 'POST' });
+                const data = await response.json();
+
+                // Append logs
+                logsContainer.innerHTML = '';
+                if (data.execution_logs && data.execution_logs.length > 0) {
+                    data.execution_logs.forEach(log => {
+                        const p = document.createElement('p');
+                        if (log.includes('BLOCKED')) {
+                            p.className = 'text-rose-400 font-semibold';
+                        } else if (log.includes('Updated') || log.includes('Passed') || log.includes('Dispatched')) {
+                            p.className = 'text-emerald-400';
+                        } else {
+                            p.className = 'text-slate-300';
+                        }
+                        p.textContent = `> ${log}`;
+                        logsContainer.appendChild(p);
+                    });
+                }
+
+                statusIndicator.textContent = data.status || "Completed";
+                statusIndicator.className = data.status === "guardrail_blocked" || data.status === "paused_dispute" ? "text-xs font-mono text-rose-400" : "text-xs font-mono text-emerald-400";
+
+                // Update Inspector
+                document.getElementById('case-badge').textContent = data.case_id || 'Case Active';
+                
+                if (data.diagnosis) {
+                    document.getElementById('diag-root-cause').textContent = data.diagnosis.root_cause || '--';
+                    document.getElementById('diag-strategy').textContent = data.diagnosis.strategy_summary || '--';
+                    document.getElementById('generated-content').textContent = data.diagnosis.message_body || data.diagnosis.subject || '--';
+                }
+
+                if (data.guardrail_result) {
+                    const gBox = document.getElementById('guardrail-status-box');
+                    if (data.guardrail_result.is_compliant) {
+                        gBox.innerHTML = `<span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">✓ Compliant & Safe</span> <span class="text-slate-400 text-[11px]">(0 Policy Violations)</span>`;
+                    } else {
+                        const reasons = data.guardrail_result.violations.map(v => v.message).join(' | ');
+                        gBox.innerHTML = `<span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 font-semibold">🚫 Blocked</span> <span class="text-rose-300 text-[11px]">${reasons}</span>`;
+                    }
+                }
+
+                // Refresh financial stats & ledger
+                await refreshData();
+
+            } catch (err) {
+                logsContainer.innerHTML += `<p class="text-rose-500">> Network Error: ${err.message}</p>`;
+                statusIndicator.textContent = "Error";
+            }
+        }
+
+        async function refreshData() {
+            try {
+                // 1. Fetch KPI Metrics
+                const mRes = await fetch('/api/v1/ledger/metrics');
+                const metrics = await mRes.json();
+
+                document.getElementById('kpi-at-risk').textContent = `$${(metrics.total_revenue_at_risk || 0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.getElementById('kpi-recovered').textContent = `$${(metrics.total_recovered_revenue || 0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.getElementById('kpi-recovery-rate').textContent = `${metrics.overall_recovery_rate_pct || 0}%`;
+                document.getElementById('kpi-net-recovered').textContent = `$${(metrics.net_recovered_revenue || 0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.getElementById('kpi-roi-multiple').textContent = `${metrics.net_roi_multiple || 0}x`;
+
+                // 2. Fetch Ledger Entries
+                const lRes = await fetch('/api/v1/ledger/entries?limit=15');
+                const entries = await lRes.json();
+
+                const tbody = document.getElementById('ledger-table-body');
+                if (!entries || entries.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="9" class="py-6 text-center text-slate-500 font-sans">No ledger transactions yet. Run a scenario above.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = entries.map(e => `
+                    <tr class="hover:bg-slate-800/40 transition text-slate-300">
+                        <td class="py-3 px-4 font-bold text-indigo-400">#${e.sequence_id}</td>
+                        <td class="py-3 px-4 text-slate-400">${e.case_id}</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 text-[10px] rounded ${e.entry_type === 'action_dispatched' ? 'bg-blue-500/10 text-blue-400' : 'bg-slate-800 text-slate-400'}">
+                                ${e.entry_type}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 font-mono">$${(e.amount || 0).toFixed(2)}</td>
+                        <td class="py-3 px-4 font-mono text-emerald-400 font-semibold">$${(e.gross_recovered || 0).toFixed(2)}</td>
+                        <td class="py-3 px-4 font-mono text-rose-400">$${((e.gateway_fee || 0) + (e.communication_cost || 0) + (e.ai_token_cost || 0)).toFixed(4)}</td>
+                        <td class="py-3 px-4 font-mono text-indigo-300 font-bold">$${(e.net_recovered || 0).toFixed(2)}</td>
+                        <td class="py-3 px-4 text-slate-500 text-[10px]" title="${e.current_hash}">${(e.current_hash || '').slice(0, 12)}...</td>
+                        <td class="py-3 px-4 text-slate-500 text-[11px] font-sans">${new Date(e.timestamp).toLocaleTimeString()}</td>
+                    </tr>
+                `).join('');
+
+            } catch (err) {
+                console.error("Failed to refresh metrics:", err);
+            }
+        }
+
+        async function verifyChain() {
+            try {
+                const res = await fetch('/api/v1/ledger/verify-integrity');
+                const data = await res.json();
+                if (data.is_valid) {
+                    alert(`✅ Cryptographic Audit Chain Validated!\nTotal Records Verified: ${data.total_records_verified}\nLatest Verified Hash: ${data.last_verified_hash}`);
+                } else {
+                    alert(`❌ Audit Chain Violation: ${data.error}`);
+                }
+            } catch (err) {
+                alert(`Error verifying chain: ${err.message}`);
+            }
+        }
+
+        // Initial Load
+        window.addEventListener('DOMContentLoaded', () => {
+            refreshData();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "AI Revenue Recovery",
+  "description": "Autonomous AI revenue recovery engine with risk detection, LangGraph reasoning, compliance guardrails, and cryptographic financial audit ledger.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
