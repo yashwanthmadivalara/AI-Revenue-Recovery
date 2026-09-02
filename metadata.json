@@ -1,6 +1,6 @@
 {
-  "name": "AI Revenue Recovery",
-  "description": "Autonomous AI revenue recovery engine with risk detection, LangGraph reasoning, compliance guardrails, and cryptographic financial audit ledger.",
+  "name": "ReVora (revenue recovery AI-agent)",
+  "description": "ReVora (revenue recovery AI-agent): Autonomous revenue recovery engine with risk detection, reasoning state machines, compliance guardrails, and cryptographic financial audit ledger.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

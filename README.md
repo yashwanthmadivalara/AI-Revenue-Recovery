@@ -1,11 +1,11 @@
-# ⚡ AI Revenue Recovery System
+# ⚡ ReVora (revenue recovery AI-agent)
 
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B%20%7C%2022-339933.svg?logo=nodedotjs)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-3178C6.svg?logo=typescript)](https://www.typescriptlang.org/)
 [![Express](https://img.shields.io/badge/Express-5.0-000000.svg?logo=express)](https://expressjs.com)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
-An autonomous, enterprise-grade **AI Revenue Recovery and Dunning Platform**. It seamlessly transitions from real-time telemetry risk detection to root-cause reasoning (LangGraph-style state machine), policy & compliance guardrail validation, multi-channel bounded execution, and an immutable, cryptographically chained financial audit ledger with net ROI attribution.
+**ReVora** is an autonomous, enterprise-grade **AI Revenue Recovery and Dunning Platform**. It seamlessly transitions from real-time telemetry risk detection to root-cause reasoning (LangGraph-style state machine), policy & compliance guardrail validation, multi-channel bounded execution, and an immutable, cryptographically chained financial audit ledger with net ROI attribution.
 
 ---
 

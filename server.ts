@@ -34,7 +34,7 @@ async function seedInitialData() {
 app.get("/api/v1/health", (req, res) => {
   res.json({
     status: "healthy",
-    system: "AI Revenue Recovery Engine",
+    system: "ReVora - AI Revenue Recovery Engine",
     version: "1.0.0",
     engine: "Autonomous LangGraph State Machine",
     ledger: "SHA-256 Hash-Chained Append-Only",
@@ -190,7 +190,7 @@ app.get("/docs", (req, res) => {
   res.send(`<!DOCTYPE html>
 <html>
 <head>
-  <title>AI Revenue Recovery - Swagger API Docs</title>
+  <title>ReVora - Swagger API Docs</title>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
@@ -209,7 +209,7 @@ app.get("/docs", (req, res) => {
         spec: {
           openapi: "3.0.0",
           info: {
-            title: "AI Revenue Recovery Engine API",
+            title: "ReVora Engine API",
             version: "1.0.0",
             description: "Autonomous Risk Detection, LangGraph Reasoning, Compliance Guardrails, and SHA-256 Append-Only Financial Audit Ledger."
           },
@@ -239,6 +239,6 @@ app.use((req, res) => {
 
 // Start server immediately on port 3000
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`AI Revenue Recovery Engine listening on http://0.0.0.0:${PORT}`);
+  console.log(`ReVora Engine listening on http://0.0.0.0:${PORT}`);
   seedInitialData();
 });
